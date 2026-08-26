@@ -14,7 +14,8 @@
 
 ## Обзор проекта
 <p align="center">
-  🚀 <a href="[https://tik-talk-sepia.vercel.app/profile/me](https://tik-talk-sepia.vercel.app/profile/me)">Открыть демо</a>
+  🚀 <a href="[https://tik-talk-sepia.vercel.app/profile/me](https://tik-talk-sepia.vercel.app/profile/me)"> [Открыть демо](https://tik-talk-sepia.vercel.app/)</a>
+ 
 </p>
 Монорепозиторий содержит одно приложение и набор библиотек в папке libs, которые предоставляют компоненты интерфейса и клиентскую логику.
 
