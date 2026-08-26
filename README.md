@@ -1,85 +1,112 @@
-# TikTalk
+<div align="center">
+  <img src="apps/tik-talk/public/assets/svg/logo-small.svg" width="110" alt="TikTalk логотип" />
+  <h1 style="margin:0.4rem 0 0.2rem;">TikTalk</h1>
+  <p style="margin:0; color:#555; max-width:720px;">TikTalk — демонстрационное веб‑приложение для профилей и ленты, реализованное на Angular и организованное в монорепозитории под управлением Nx.</p>
+</div>
 
-TikTalk is an Angular + Nx monorepo (single application workspace) containing a demo social/profile application and a set of feature libraries. This README documents the repository state as implemented in the source code — it does not invent features or claim functionality that is not present.
+[![Angular](https://img.shields.io/badge/Angular-20.x-DD0031?logo=angular&logoColor=white)](https://angular.io/)
+[![Nx](https://img.shields.io/badge/Nx-21.x-000000?logo=nrwl&logoColor=white)](https://nx.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-%7E5.8-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Jest](https://img.shields.io/badge/Jest-%5E30.0.2-C21325?logo=jest&logoColor=white)](https://jestjs.io/)
+[![ESLint](https://img.shields.io/badge/ESLint-9.x-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
+[![Prettier](https://img.shields.io/badge/Prettier-2.x-F7B93E?logo=prettier&logoColor=white)](https://prettier.io/)
 
-Key points
-- Framework: Angular 20.x
-- Monorepo manager: Nx (v21.x)
-- Language: TypeScript
-- App: apps/tik-talk (single Angular application)
 
-Quick links
-- App root: [apps/tik-talk](C:/Users/Runar/Desktop/tik-talk/apps/tik-talk)
-- Workspace manifest: [package.json](C:/Users/Runar/Desktop/tik-talk/package.json)
-- Nx config: [nx.json](C:/Users/Runar/Desktop/tik-talk/nx.json)
-- Source workspace: [libs/](C:/Users/Runar/Desktop/tik-talk/libs)
+## Обзор проекта
 
-How to run (local development)
-1. Install dependencies:
+Монорепозиторий содержит одно приложение (apps/tik-talk) и набор библиотек в папке libs, которые предоставляют компоненты интерфейса и клиентскую логику.
 
+
+## Реализованные функции
+
+- Каркас приложения и маршрутизация: основной layout и маршруты для профиля, настроек и поиска.
+  См. `apps/tik-talk/src/app/app.routes.ts`
+- Клиент аутентификации: вход, обновление токена и выход; токены сохраняются в cookie (ngx-cookie-service).
+  См. `libs/tik-talk/auth/src/lib/auth.service.ts`
+- Клиент профилей: получение собственной страницы, получение аккаунта по id, список подписчиков, частичное обновление профиля, загрузка аватара.
+  См. `libs/core/data-access/data-access-api/src/lib/services/api-service.ts`
+- Общие UI‑библиотеки: sidebar, svg‑иконки, заголовок профиля, компоненты постов (post-feed, post-input) — используются на странице профиля.
+- Страница логина реализована в компоненте login-page-component.
+
+
+## Что планируется
+
+- Документирование и конфигурация окружений для переключения backend‑эндпоинтов (environment/.env).
+- Интеграция CI для запуска lint и тестов при создании PR.
+- Расширение покрытия unit/integration тестов для ключевых сервисов (AuthService, ProfileService).
+
+
+## Технологии
+
+- Angular ~20.1
+- Nx 21.x
+- TypeScript ~5.8
+- RxJS, zone.js
+- Jest (юнит‑тесты)
+- Cypress (E2E, присутствует конфигурация в проекте)
+- ESLint, Prettier
+- ngx-cookie-service
+
+(Точные версии в `package.json`.)
+
+
+## Архитектура репозитория
+
+- `apps/tik-talk` — основное приложение (sourceRoot: `apps/tik-talk/src`)
+- `libs/` — библиотеки с функциональными и общими модулями
+
+Ключевые конфигурационные файлы: `package.json`, `nx.json`, `apps/tik-talk/project.json`.
+Статические ресурсы приложения находятся в `apps/tik-talk/public` (например, логотип: `apps/tik-talk/public/assets/svg/logo-small.svg`).
+
+
+## Как запустить локально
+
+1. Установить зависимости:
+
+   ```sh
    npm install
+   ```
 
-2. Start the dev server (opens browser):
+2. Запустить dev‑сервер (открывает браузер):
 
+   ```sh
    npm start
+   ```
 
-   This runs: `npx nx serve tik-talk -o` (see [package.json](C:/Users/Runar/Desktop/tik-talk/package.json) scripts).
+   Команда выполняет: `npx nx serve tik-talk -o`.
 
-3. Build production bundle:
+3. Собрать production‑бандл:
 
+   ```sh
    npm run build
+   ```
 
-   Which runs: `nx build tik-talk --configuration=production`.
+4. Линт и форматирование:
 
-Useful scripts
-- npm start — serve the tik-talk app
-- npm run build — production build
-- npm run format — run Prettier
-- npm run lint — lint via Nx
+   ```sh
+   npm run lint
+   npm run format
+   ```
 
-What is implemented (based on the code)
-- Application shell: apps/tik-talk
-  - Routes are defined in [apps/tik-talk/src/app/app.routes.ts](C:/Users/Runar/Desktop/tik-talk/apps/tik-talk/src/app/app.routes.ts).
-  - The app uses a layout component and lazy-loaded feature components for profile, settings and search.
-  - Login is implemented as a component at [libs/tik-talk/login/src/lib/login-page-component/login-page.component.ts](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/login/src/lib/login-page-component/login-page.component.ts).
 
-- Authentication library: [libs/tik-talk/auth](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/auth)
-  - AuthService handles login, refresh and logout and stores tokens in cookies (`token` and `refreshToken`). See [libs/tik-talk/auth/src/lib/auth.service.ts](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/auth/src/lib/auth.service.ts).
-  - AuthService points at an external auth endpoint: `https://icherniakov.ru/yt-course/auth/` (present in the code).
+## Тестирование
 
-- Data access / Profile API: [libs/core/data-access/data-access-api](C:/Users/Runar/Desktop/tik-talk/libs/core/data-access/data-access-api)
-  - ProfileService exposes methods such as getMe(), getAccount(id), getSubscribersShortList() and uses a base API URL `https://icherniakov.ru/yt-course/`.
-  - Many UI components depend on ProfileService for user/profile data.
+- Unit: Jest
 
-- UI libraries (selected)
-  - [libs/tik-talk/common-ui](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/common-ui) — Sidebar, SvgIcon, ProfileHeader and other shared components (used by the layout and pages).
-  - [libs/tik-talk/layout](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/layout) — layout component used at the app root.
-  - [libs/tik-talk/profile](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/profile) — profile feature with a ProfilePageComponent that uses ProfileService.
-  - [libs/tik-talk/search](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/search) — search feature components.
-  - [libs/tik-talk/post-feed], [post-input] — components for posts (present in libs).
-
-Notable implementation details and runtime dependencies
-- The app performs HTTP calls to an external API (base URL visible in code). Running the app without that API will result in network errors for profile/auth-related features.
-- Auth tokens are persisted in cookies via ngx-cookie-service and read by AuthService (see [libs/tik-talk/auth/src/lib/auth.service.ts](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/auth/src/lib/auth.service.ts)).
-- app.routes.ts contains a set of commented-out routes for additional features — these are not active and should not be assumed to be implemented.
-
-Testing and linting
-- Unit tests are configured with Jest for the app and libraries. Example: check `jest.config.ts` and per-project jest configs under libs/apps.
-- Run tests with Nx, for example:
-
+  ```sh
   npx nx test tik-talk
+  ```
 
-- Lint all projects:
+- E2E: в репозитории присутствует конфигурация Cypress (`apps/tik-talk-e2e`), для запуска используйте соответствующие цели в Nx/скрипты.
 
-  npm run lint
 
-Notes and caveats
-- This README was generated by inspecting the repository files; no source code was modified to produce it.
-- The documentation focuses on what is present in code. Do not assume missing functionality is available unless you see matching source files (for example, some routes are present but commented out).
+## Важные замечания при запуске
 
-If you want, the next steps can be:
-- Expand README with screenshots or developer notes for specific libraries.
-- Add environment variable documentation if you plan to run the app against a different backend.
+- Клиент обращается к внешнему API (в коде указан базовый URL: `https://icherniakov.ru/yt-course/`). Без доступа к этому API функционал профиля и аутентификации будет выдавать сетевые ошибки.
+- Токены аутентификации хранятся в cookie под ключами `token` и `refreshToken`.
 
----
-Generated from the current repository state.
+
+## Статус проекта
+
+- Состояние: демонстрационный / в разработке. Реализован каркас приложения, клиент аутентификации и базовая работа с профилями.
+- Не готов для продакшена без дополнительной конфигурации окружения и аудита безопасности.
