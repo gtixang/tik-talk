@@ -1,82 +1,85 @@
 # TikTalk
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+TikTalk is an Angular + Nx monorepo (single application workspace) containing a demo social/profile application and a set of feature libraries. This README documents the repository state as implemented in the source code — it does not invent features or claim functionality that is not present.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+Key points
+- Framework: Angular 20.x
+- Monorepo manager: Nx (v21.x)
+- Language: TypeScript
+- App: apps/tik-talk (single Angular application)
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+Quick links
+- App root: [apps/tik-talk](C:/Users/Runar/Desktop/tik-talk/apps/tik-talk)
+- Workspace manifest: [package.json](C:/Users/Runar/Desktop/tik-talk/package.json)
+- Nx config: [nx.json](C:/Users/Runar/Desktop/tik-talk/nx.json)
+- Source workspace: [libs/](C:/Users/Runar/Desktop/tik-talk/libs)
 
-## Finish your remote caching setup
+How to run (local development)
+1. Install dependencies:
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/b2Vjbwaonr)
+   npm install
 
+2. Start the dev server (opens browser):
 
-## Run tasks
+   npm start
 
-To run the dev server for your app, use:
+   This runs: `npx nx serve tik-talk -o` (see [package.json](C:/Users/Runar/Desktop/tik-talk/package.json) scripts).
 
-```sh
-npx nx serve tik-talk
-```
+3. Build production bundle:
 
-To create a production bundle:
+   npm run build
 
-```sh
-npx nx build tik-talk
-```
+   Which runs: `nx build tik-talk --configuration=production`.
 
-To see all available targets to run for a project, run:
+Useful scripts
+- npm start — serve the tik-talk app
+- npm run build — production build
+- npm run format — run Prettier
+- npm run lint — lint via Nx
 
-```sh
-npx nx show project tik-talk
-```
+What is implemented (based on the code)
+- Application shell: apps/tik-talk
+  - Routes are defined in [apps/tik-talk/src/app/app.routes.ts](C:/Users/Runar/Desktop/tik-talk/apps/tik-talk/src/app/app.routes.ts).
+  - The app uses a layout component and lazy-loaded feature components for profile, settings and search.
+  - Login is implemented as a component at [libs/tik-talk/login/src/lib/login-page-component/login-page.component.ts](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/login/src/lib/login-page-component/login-page.component.ts).
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+- Authentication library: [libs/tik-talk/auth](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/auth)
+  - AuthService handles login, refresh and logout and stores tokens in cookies (`token` and `refreshToken`). See [libs/tik-talk/auth/src/lib/auth.service.ts](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/auth/src/lib/auth.service.ts).
+  - AuthService points at an external auth endpoint: `https://icherniakov.ru/yt-course/auth/` (present in the code).
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Data access / Profile API: [libs/core/data-access/data-access-api](C:/Users/Runar/Desktop/tik-talk/libs/core/data-access/data-access-api)
+  - ProfileService exposes methods such as getMe(), getAccount(id), getSubscribersShortList() and uses a base API URL `https://icherniakov.ru/yt-course/`.
+  - Many UI components depend on ProfileService for user/profile data.
 
-## Add new projects
+- UI libraries (selected)
+  - [libs/tik-talk/common-ui](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/common-ui) — Sidebar, SvgIcon, ProfileHeader and other shared components (used by the layout and pages).
+  - [libs/tik-talk/layout](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/layout) — layout component used at the app root.
+  - [libs/tik-talk/profile](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/profile) — profile feature with a ProfilePageComponent that uses ProfileService.
+  - [libs/tik-talk/search](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/search) — search feature components.
+  - [libs/tik-talk/post-feed], [post-input] — components for posts (present in libs).
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
+Notable implementation details and runtime dependencies
+- The app performs HTTP calls to an external API (base URL visible in code). Running the app without that API will result in network errors for profile/auth-related features.
+- Auth tokens are persisted in cookies via ngx-cookie-service and read by AuthService (see [libs/tik-talk/auth/src/lib/auth.service.ts](C:/Users/Runar/Desktop/tik-talk/libs/tik-talk/auth/src/lib/auth.service.ts)).
+- app.routes.ts contains a set of commented-out routes for additional features — these are not active and should not be assumed to be implemented.
 
-Use the plugin's generator to create new projects.
+Testing and linting
+- Unit tests are configured with Jest for the app and libraries. Example: check `jest.config.ts` and per-project jest configs under libs/apps.
+- Run tests with Nx, for example:
 
-To generate a new application, use:
+  npx nx test tik-talk
 
-```sh
-npx nx g @nx/angular:app demo
-```
+- Lint all projects:
 
-To generate a new library, use:
+  npm run lint
 
-```sh
-npx nx g @nx/angular:lib mylib
-```
+Notes and caveats
+- This README was generated by inspecting the repository files; no source code was modified to produce it.
+- The documentation focuses on what is present in code. Do not assume missing functionality is available unless you see matching source files (for example, some routes are present but commented out).
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+If you want, the next steps can be:
+- Expand README with screenshots or developer notes for specific libraries.
+- Add environment variable documentation if you plan to run the app against a different backend.
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Install Nx Console
-
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
-
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Useful links
-
-Learn more:
-
-- [Learn more about this workspace setup](https://nx.dev/getting-started/tutorials/angular-monorepo-tutorial?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
+Generated from the current repository state.
