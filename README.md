@@ -10,7 +10,7 @@
 [![ESLint](https://img.shields.io/badge/ESLint-9.x-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
 [![Prettier](https://img.shields.io/badge/Prettier-2.x-F7B93E?logo=prettier&logoColor=white)](https://prettier.io/)
 
-# TikTalk —  веб‑приложение для профилей и ленты.
+## TikTalk —  веб‑приложение для профилей и ленты.
 
 🚀 **Демо:** [Открыть приложение](https://tik-talk-sepia.vercel.app/)
 
