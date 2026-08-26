@@ -1,4 +1,4 @@
-<div align="center" style="margin-bottom: 20px;">
+<div align="center" style="margin-bottom:20px">
   <img src="apps/tik-talk/public/assets/svg/logo-small.svg" width="110" alt="TikTalk логотип" />
 </div>
 
