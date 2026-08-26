@@ -1,6 +1,7 @@
 <div align="center" style="margin-bottom:20px">
   <img src="apps/tik-talk/public/assets/svg/logo-small.svg" width="110" alt="TikTalk логотип" />
 </div>
+<br/>
 
 [![Angular](https://img.shields.io/badge/Angular-20.x-DD0031?logo=angular&logoColor=white)](https://angular.io/)
 [![Nx](https://img.shields.io/badge/Nx-21.x-000000?logo=nrwl&logoColor=white)](https://nx.dev/)
