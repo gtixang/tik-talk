@@ -1,7 +1,6 @@
 <div align="center">
   <img src="apps/tik-talk/public/assets/svg/logo-small.svg" width="110" alt="TikTalk логотип" />
   <h1 style="margin:0.4rem 0 0.2rem;">TikTalk</h1>
-# TikTalk —  веб‑приложение для профилей и ленты.
 </div>
 
 [![Angular](https://img.shields.io/badge/Angular-20.x-DD0031?logo=angular&logoColor=white)](https://angular.io/)
@@ -10,6 +9,8 @@
 [![Jest](https://img.shields.io/badge/Jest-%5E30.0.2-C21325?logo=jest&logoColor=white)](https://jestjs.io/)
 [![ESLint](https://img.shields.io/badge/ESLint-9.x-4B32C3?logo=eslint&logoColor=white)](https://eslint.org/)
 [![Prettier](https://img.shields.io/badge/Prettier-2.x-F7B93E?logo=prettier&logoColor=white)](https://prettier.io/)
+
+# TikTalk —  веб‑приложение для профилей и ленты.
 
 ## 🚀 Демо
 
