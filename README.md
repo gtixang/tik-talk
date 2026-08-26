@@ -1,4 +1,4 @@
-<div align="center">
+<div align=left">
   <img src="apps/tik-talk/public/assets/svg/logo-small.svg" width="110" alt="TikTalk логотип" />
   <h1 style="margin:0.4rem 0 0.2rem;">TikTalk</h1>
   <p style="margin:0; color:#555; max-width:720px;">TikTalk — демонстрационное веб‑приложение для профилей и ленты, реализованное на Angular и организованное в монорепозитории под управлением Nx.</p>
