@@ -1,6 +1,5 @@
 <div align="center">
   <img src="apps/tik-talk/public/assets/svg/logo-small.svg" width="110" alt="TikTalk логотип" />
-  <h1 style="margin:0.4rem 0 0.2rem;">TikTalk</h1>
 </div>
 
 [![Angular](https://img.shields.io/badge/Angular-20.x-DD0031?logo=angular&logoColor=white)](https://angular.io/)
